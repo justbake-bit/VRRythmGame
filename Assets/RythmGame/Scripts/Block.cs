@@ -25,30 +25,31 @@ namespace justbake.RythmGame
 		private void OnTriggerEnter(Collider other)
 		{
 			if(other.CompareTag("SwordB")) {
-				if(color == BlockColor.RED){
+				if(color == BlockColor.RED && GameManager.instance.rightSwordTrakcer.velocity.magnitude >= GameManager.instance.swordHitVelocityThreshold){
 					// add to player score
-					
+					GameManager.instance.AddScore();
 				}
 				else 
 				{
-					
+					GameManager.instance.HitWrongBlock();
 				}
 				Hit();
 			}
 			else if(other.CompareTag("SwordA")) {
-				Hit();
-				if(color == BlockColor.GREEN){
+				if(color == BlockColor.GREEN && GameManager.instance.leftSwordTrakcer.velocity.magnitude >= GameManager.instance.swordHitVelocityThreshold){
 					// add to player score
-					
+					GameManager.instance.AddScore();
 				}
 				else 
 				{
-					
+					GameManager.instance.HitWrongBlock();
 				}
+				Hit();
 			}
 		}
 		
-		private void Hit() {
+		public void Hit()
+		{
 			// enable broken pieces
 			brokenBlockLeft.SetActive(true);
 			brokenBlockRight.SetActive(true);
